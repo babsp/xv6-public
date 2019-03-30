@@ -89,3 +89,14 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+int
+sys_getprocs(void)
+{
+   int contador;
+   for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+   {
+     if(p->state != UNUSED)
+       contador++;
+   }
+}
