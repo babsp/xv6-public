@@ -537,7 +537,7 @@ int
 sys_getprocs(void)
 {
      struct proc *p;
-    int contador;
+    int contador=0;
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
     {
         if(p->state != UNUSED)
