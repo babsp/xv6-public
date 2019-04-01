@@ -532,3 +532,16 @@ procdump(void)
     cprintf("\n");
   }
 }
+
+int
+sys_getprocs(void)
+{
+    int contador;
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+    {
+        if(p->state != UNUSED)
+            contador++;
+    }
+    return contador;
+}
+
