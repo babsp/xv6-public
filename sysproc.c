@@ -99,4 +99,5 @@ sys_getprocs(void)
      if(p->state != UNUSED)
        contador++;
    }
+  return contador;
 }
