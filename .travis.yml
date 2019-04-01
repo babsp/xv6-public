@@ -1,0 +1,14 @@
+language: c
+script: make && make fs.img
+deploy:
+  provider: releases
+  api_key:
+    secure: iucu9Efq0VmlzE4/N1Uv8JD+GK/Zkvuai6T0v6hnXgrVL/TH8VXFIulGT0p4nlo4ehQ3jyw0TGMWmoeQIvCD8UVKdhfh6DwrjMmEQAvt2UibDZq0E/MmgjrD7bVlQKnTMc9eWgKUOf18jcVF2NxDn++Qap/JxGHphm1qrhU3odTzwx6Rti+05zuoaw+gw53D+kUntjpNXbo5k3Sngk99ZTIEGHP7k8LogQRd2CTxnOTAgWrqPDsSSvkcDV78hebTUdorY+TqZYZUTA8gNHHEOlFG++LiKLUvIt6TVfr1gT4MdILN5jq2sO2sYG40NcXxUV/TJZol1zs6xcgL8Q31YgTlAbRaT9XVzn4749ErRNwpE0J7FOOJSy6qhCjqX4lBm8NZulRIAM2dje2lm8T9+onaQSFKjN1m6YosvWrbfn6CMZBJFpPQlqAzP1rySeIiZhSjOrOd3KCiVRw9RFfME7PXXIERQJTUPFH1cGaHwLi8RCjh306eIp7yzlI5xEKi8Phj7QKG0bjngXb8DC668a0b2faRVNkZFqu1WdpNN2uhzMW6CMOQOVPlFQeJF4G89JXm+nR30HGZzdHmMKFf0Bh/etf8ykLIBsloN02ALbGpeEwdnAlP0EKDcmb+w6WAgIl9cxdppwave2GoEEDSIvzDU+FJyZjNmNNrbApJgX0=
+  file:
+    - fs.img 
+    - xv6.img
+  skip_cleanup: true
+  on:
+    repo: babsp/xv6-public
+    branch: project_1
+  tags: true
