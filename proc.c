@@ -539,7 +539,7 @@ sys_getprocs(void)
    int contador;
    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
    {
-     if(p->state != UNUSED)
+     if(p->state != UNUSED && p->state!= ZOMBIE)
        contador++;
    }
   return contador;
