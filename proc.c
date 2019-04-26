@@ -7,6 +7,9 @@
 #include "proc.h"
 #include "spinlock.h"
 
+int totalTickets=0;
+int random(int max);
+
 struct {
   struct spinlock lock;
   struct proc proc[NPROC];
@@ -88,7 +91,9 @@ allocproc(void)
 found:
   p->state = EMBRYO;
   p->pid = nextpid++;
-
+  p->tickets=100; //sumarle 100 tickets al proceso
+	totalTickets+=100; //agregarlos al total de tickets
+  
   release(&ptable.lock);
 
   // Allocate kernel stack.
@@ -230,7 +235,8 @@ exit(void)
   struct proc *curproc = myproc();
   struct proc *p;
   int fd;
-
+  totalTickets-=100;
+  
   if(curproc == initproc)
     panic("init exiting");
 
@@ -332,6 +338,10 @@ scheduler(void)
 
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
+    
+    int counter=0;
+    int winner=random(totalTickets);
+    
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
         continue;
@@ -339,6 +349,9 @@ scheduler(void)
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
+      counter+=p->tickets;
+    	if(counter<winner){continue;}
+      
       c->proc = p;
       switchuvm(p);
       p->state = RUNNING;
@@ -349,6 +362,7 @@ scheduler(void)
       // Process is done running for now.
       // It should have changed its p->state before coming back.
       c->proc = 0;
+      break;
     }
     release(&ptable.lock);
 
@@ -543,4 +557,16 @@ sys_getprocs(void)
        contador++;
    }
   return contador;
+}
+
+//generate random number
+
+static unsigned long x = 1;
+int srandom=0;
+
+int random(int max){
+	unsigned long a = 1103515245, c = 12345;
+	x = a*(x+srandom)+c+srandom; 
+  srandom++;
+	return (unsigned int)(x/65536)%(max+1);
 }
