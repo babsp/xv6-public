@@ -57,3 +57,6 @@ struct proc {
 //   original data and bss
 //   fixed-size stack
 //   expandable heap
+
+int totalTickets();
+int random(int max);
