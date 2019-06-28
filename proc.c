@@ -547,13 +547,13 @@ sys_getprocs(void)
 
 int addr_translate(char* virtual_address)
 {
-    struct proc *curproc = myproc();
-    curproc->pgdir;
-      
     int physical_address;
     pde_t *pgdir,*pgtab,*pde;
 
     //must initialise pgdir
+    struct proc *curproc = myproc();
+    curproc->pgdir;
+      
     
     pde = &pgdir[PDX(virtual_address)];
     if(*pde & PTE_P){
